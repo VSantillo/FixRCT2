@@ -4,6 +4,7 @@
 import os  # Move around and inspect directories
 import sys  # Why do I need this?
 import json  # To handle the json data
+import argparse
 
 whats_happening = '''Starting RCT2 Fix
 -------------------
@@ -29,13 +30,27 @@ def no_upstop_wheels(data):
                 print(f'{filename} was updated')
 
 
+def arg_parse():
+    # Set up argument parser
+    arg_parser = argparse.ArgumentParser()
+
+    # Add arguments
+    arg_parser.add_argument('-p', '--path', type=str, dest='FILE_PATH', help='Path to ride JSON data in installation',
+                            default=best_path_guess)
+
+    # Parse
+    return arg_parser.parse_args()
+
 if __name__ == "__main__":
+    args = arg_parse()
+
     # Let the user know what's happening
     print(whats_happening)
 
+
     # TODO: Accept path from input args
     # Move to RCT2 Directory
-    os.chdir(best_path_guess)
+    os.chdir(args.FILE_PATH)
 
     print(f'Operating in: {os.getcwd()}')
 
